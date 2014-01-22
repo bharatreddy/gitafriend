@@ -1,0 +1,2 @@
+Project for Insight Data Science Jan-2014 Session
+A webapp developed using FLASK, BOOTSTRAP and d3.js to identify friends on Github. A Python framework is included which can be used to create a local database consisting of details of github users. These details are analyzed using collaborative filtering to identify similarities between users. Different parameters used to find similar users are common repos contributed to, repos starred, common followers, common organizations, days active on Github, Programming languages used.
