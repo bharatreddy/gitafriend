@@ -163,7 +163,7 @@ class DbAccess(object):
         """
         Populate the gitranks table
         """
-        query = ("INSERT INTO gitranks2 "
+        query = ("INSERT INTO gitranks "
                " (login, rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8," 
                 "rank9, rank10, rank11, rank12, rank13, rank14, rank15, rank16, rank17,"
                 "rank18, rank19, rank20, rank21, rank22, rank23, rank24, rank25, rank26,"
@@ -271,11 +271,11 @@ class DbAccess(object):
         """
         query = ("""
             SELECT flwrlogin
-            FROM userdetail 
+            FROM follower 
             WHERE login=%s
             """)
         self.cursor.execute(query, (userLogin,) )
-        return [s for s in self.cursor]
+        return [str(s[0]) for s in self.cursor]
 
     def retD3PlotDet(self):
         """
