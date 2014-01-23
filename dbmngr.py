@@ -162,15 +162,17 @@ class DbAccess(object):
         Populate the follower table
         """
         query = ("INSERT INTO validation "
-               " (login, percpredtop10, percpredtop20, percpredtop30) "
-               " VALUES (%s, %s, %s, %s) "
+               " (login, numflwng, percpredtop10, percpredtop20, percpredtop30) "
+               " VALUES (%s, %s, %s, %s, %s) "
                " ON DUPLICATE KEY UPDATE "
                "   login=VALUES(login), "
+               "   numflwng=VALUES(numflwng), "
                "   percpredtop10=VALUES(percpredtop10), "
                "   percpredtop20=VALUES(percpredtop20), "
                "   percpredtop30=VALUES(percpredtop30) ")
         params = (
             vldtDict['login'], 
+            vldtDict['numflwng'], 
             vldtDict['percpredtop10'], 
             vldtDict['percpredtop20'], 
             vldtDict['percpredtop30'])

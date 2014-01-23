@@ -31,7 +31,7 @@ class VldtGitRanker(object):
             currUserDict = self.dbObj.retUserDet( ull )
             self.userDataFrame.loc[ ull ] = pandas.Series( currUserDict )
         # A dataframe to store the ranks
-        self.userRankDF = pandas.Series( index=self.userLoginList )
+        self.userRankSer = pandas.Series( index=self.userLoginList )
 
     def vldtFlwrs( self ):
         """In this part we use the user DataFrame from loadData
@@ -67,7 +67,11 @@ class VldtGitRanker(object):
         # more similar people are.
         for ind in self.userDataFrame.index.unique():
             currUserFlwngList = self.dbObj.retFlwrList( ind )
-            
+            if len( currUserFlwngList ) == 0 :
+                vldtDict['login'] = ind 
+                vldtDict['percpredtop10'] = 
+                vldtDict['percpredtop20'], 
+                vldtDict['percpredtop30']
             for col in self.userDataFrame.index.unique():
                 # Before proceeding we remove the followers 
                 # Except for about 4-5 users, who can serve as validation
@@ -178,22 +182,27 @@ class VldtGitRanker(object):
                         currSimilarityScore += ( \
                             scoreDict[k] ) * weightDict[k]
                     # Store the final score in the Rank DF
-                self.userRankDF.loc[ind][col] = currSimilarityScore
-                print 'ranking...', ind, col, currSimilarityScore
-        # Now get a list of the best suggestions and store it into the ranks table
-        # for that loop through each of the user info and sort
-        for ii in self.userRankDF.index.unique():
-            # sort in descending order
-            print ' Ranking and Populating database for..', ii
+                self.userRankSer[col] = currSimilarityScore
+                print 'checking...', ind, col, currSimilarityScore
+        
+            
             # Sort using numpy
-            vals =self.userRankDF.loc[ii].values
-            cols =self.userRankDF.columns
+            vals =self.userRankSer.values
+            cols =numpy.array( [ x for x in self.userRankSer.index ] )
             sortedInds = numpy.argsort( vals )[::-1]
             rankList = cols[sortedInds]
-            rankList = rankList[0:31] # current user and top 30
-            # Just double checking if the first result is the same user
+            rankList = rankList[0:31] 
+            # Check how many followers we predict
+            Counttop10 = 0
+            Counttop20 = 0
+            Counttop30 = 0
+            for 
+            vldtDict['login'] = ind 
+            vldtDict['percpredtop10'] = 
+            vldtDict['percpredtop20'], 
+            vldtDict['percpredtop30']
             if ii != rankList[0] :
                 print 'wrong ordering..'
                 break
             # populate the database
-            self.dbObj.popRankDet(rankList)
+            self.dbObj.popvldt(valdict)
