@@ -270,8 +270,8 @@ class DbAccess(object):
         Get a list of follwers for a given user
         """
         query = ("""
-            SELECT flwrlogin
-            FROM follower 
+            SELECT flnglogin
+            FROM following
             WHERE login=%s
             """)
         self.cursor.execute(query, (userLogin,) )

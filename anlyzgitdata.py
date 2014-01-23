@@ -65,16 +65,14 @@ class LoadGitUserDB(object):
         # this score is simply the inverse of eucledian distance. 
         # higher the score (corresponds to lower distance) 
         # more similar people are.
-        print ' calculating scores..'
         for ind in self.userDataFrame.index.unique():
             for col in self.userDataFrame.index.unique():
                 # Before proceeding we remove the followers 
                 # Except for about 4-5 users, who can serve as validation
                 # I include me, people I know and a couple of famous people
-                excludeUsers = [ 'bharatreddy', 'ajribeiro', 'sdelarquier',\
-                 'mbostock', 'mojombo' ]
-                currUserFlwrList = self.dbObj.retFlwrList( ind )
-                if (col in currUserFlwrList) and (ind not in excludeUsers) :
+                excludeUsers = [ ]
+                currUserFlwngList = self.dbObj.retFlwrList( ind )
+                if (col in currUserFlwngList) and (ind not in excludeUsers) :
                     currSimilarityScore = 0.
                 else :
                     dataUser = self.userDataFrame.ix[ind]
