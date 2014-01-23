@@ -3,6 +3,7 @@ import json
 import datetime
 import pandas
 import dbmngr
+import numpy
 
 class LoadGitUserDB(object):
     """ Code to retreive the data from the gituserinfo database
@@ -40,13 +41,13 @@ class LoadGitUserDB(object):
         
         # Use a weights dictionary to weigh categories
         weightDict = {}
-        weightDict['num_days'] = 0.8
-        weightDict['num_flwrs'] = 0.8
+        weightDict['num_days'] = 0.7
+        weightDict['num_flwrs'] = 0.1
         weightDict['flwr_list'] = 2.
-        weightDict['num_flwng'] = 0.5
+        weightDict['num_flwng'] = 0.05 # This number can be really high sometimes
         weightDict['flng_list'] = 1.25
         weightDict['repo_cntr'] = 2.
-        weightDict['repo_strd'] = 1.25
+        weightDict['repo_strd'] = 1.75
         weightDict['orgnztn'] = 2.
         weightDict['lang_used'] = 0.8
         # Need a dict to store max values as well to normalize later
@@ -66,8 +67,6 @@ class LoadGitUserDB(object):
         # more similar people are.
         print ' calculating scores..'
         for ind in self.userDataFrame.index.unique():
-            if ind != 'bharatreddy' :
-                continue
             for col in self.userDataFrame.index.unique():
                 # Before proceeding we remove the followers 
                 # Except for about 4-5 users, who can serve as validation
@@ -75,7 +74,7 @@ class LoadGitUserDB(object):
                 excludeUsers = [ 'bharatreddy', 'ajribeiro', 'sdelarquier',\
                  'mbostock', 'mojombo' ]
                 currUserFlwrList = self.dbObj.retFlwrList( ind )
-                if col in 'hi' :
+                if (col in currUserFlwrList) and (ind not in excludeUsers) :
                     currSimilarityScore = 0.
                 else :
                     dataUser = self.userDataFrame.ix[ind]
@@ -179,17 +178,22 @@ class LoadGitUserDB(object):
                         currSimilarityScore += ( \
                             scoreDict[k] ) * weightDict[k]
                     # Store the final score in the Rank DF
-                    self.userRankDF.loc[ind][col] = currSimilarityScore
-                    print 'ranking...', ind, col, currSimilarityScore
+                self.userRankDF.loc[ind][col] = currSimilarityScore
+                print 'ranking...', ind, col, currSimilarityScore
         # Now get a list of the best suggestions and store it into the ranks table
         # for that loop through each of the user info and sort
         for ii in self.userRankDF.index.unique():
-            if ii != 'bharatreddy':
-                continue
             # sort in descending order
             print ' Ranking and Populating database for..', ii
-            indsRank = self.userRankDF.sort(ii, ascending=False)
-            rankList = [ r for r in indsRank.index[0:30] ]
-            # include the user login and create an array
-            print self.userRankDF.loc[ii]
-            # self.dbObj.popRankDet(rankList)
+            # Sort using numpy
+            vals =self.userRankDF.loc[ii].values
+            cols =self.userRankDF.columns
+            sortedInds = numpy.argsort( vals )[::-1]
+            rankList = cols[sortedInds]
+            rankList = rankList[0:31] # current user and top 30
+            # Just double checking if the first result is the same user
+            if ii != rankList[0] :
+                print 'wrong ordering..'
+                break
+            # populate the database
+            self.dbObj.popRankDet(rankList)
