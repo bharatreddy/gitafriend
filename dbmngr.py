@@ -265,6 +265,18 @@ class DbAccess(object):
         self.cursor.execute(query)
         return [s[0] for s in self.cursor]
 
+    def retFlwrList(self, userLogin):
+        """
+        Get a list of follwers for a given user
+        """
+        query = ("""
+            SELECT flwrlogin
+            FROM userdetail 
+            WHERE login=%s
+            """)
+        self.cursor.execute(query, (userLogin,) )
+        return [s for s in self.cursor]
+
     def retD3PlotDet(self):
         """
         Get a list of number of follwers and number of repos

@@ -39,16 +39,16 @@ class LoadGitUserDB(object):
         # this we'll use to keep a track of ranks
         self.userScoreDF = pandas.DataFrame( index=self.userLoginList,\
          columns=self.userLoginList )
-        # Use a weights dictionary for later use to weigh categories
+        # Use a weights dictionary to weigh categories
         weightDict = {}
-        weightDict['num_days'] = 0.6
+        weightDict['num_days'] = 0.8
         weightDict['num_flwrs'] = 0.8
-        weightDict['flwr_list'] = 1.
+        weightDict['flwr_list'] = 2.
         weightDict['num_flwng'] = 0.5
-        weightDict['flng_list'] = 1.
+        weightDict['flng_list'] = 1.25
         weightDict['repo_cntr'] = 2.
-        weightDict['repo_strd'] = 1.5
-        weightDict['orgnztn'] = 1.75
+        weightDict['repo_strd'] = 1.25
+        weightDict['orgnztn'] = 2.
         weightDict['lang_used'] = 0.8
         # Need a dict to store max values as well to normalize later
         self.normDict = {}
@@ -200,4 +200,3 @@ class LoadGitUserDB(object):
             # include the user login and create an array
             rankList = [ii] + rankIndex
             self.dbObj.popRankDet(rankList)
-
