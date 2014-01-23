@@ -31,8 +31,7 @@ class VldtGitRanker(object):
             currUserDict = self.dbObj.retUserDet( ull )
             self.userDataFrame.loc[ ull ] = pandas.Series( currUserDict )
         # A dataframe to store the ranks
-        self.userRankDF = pandas.DataFrame( index=self.userLoginList,\
-         columns=self.userLoginList )
+        self.userRankDF = pandas.Series( index=self.userLoginList )
 
     def vldtFlwrs( self ):
         """In this part we use the user DataFrame from loadData
@@ -67,6 +66,8 @@ class VldtGitRanker(object):
         # higher the score (corresponds to lower distance) 
         # more similar people are.
         for ind in self.userDataFrame.index.unique():
+            currUserFlwngList = self.dbObj.retFlwrList( ind )
+            
             for col in self.userDataFrame.index.unique():
                 # Before proceeding we remove the followers 
                 # Except for about 4-5 users, who can serve as validation
