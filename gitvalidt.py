@@ -69,18 +69,17 @@ class VldtGitRanker(object):
             currUserFlwngList = self.dbObj.retFlwrList( ind )
             if len( currUserFlwngList ) == 0 :
                 vldtDict['login'] = ind 
-                vldtDict['percpredtop10'] = 
-                vldtDict['percpredtop20'], 
-                vldtDict['percpredtop30']
-            for col in self.userDataFrame.index.unique():
-                # Before proceeding we remove the followers 
-                # Except for about 4-5 users, who can serve as validation
-                # I include me, people I know and a couple of famous people
-                excludeUsers = [ ]
-                currUserFlwngList = self.dbObj.retFlwrList( ind )
-                if (col in currUserFlwngList) and (ind not in excludeUsers) :
-                    currSimilarityScore = 0.
-                else :
+                vldtDict['numflwng'] = 0
+                vldtDict['percpredtop10'] = 0
+                vldtDict['percpredtop20'] = 0
+                vldtDict['percpredtop30'] = 0
+                self.dbObj.popvldt(valdict)
+            else :
+                for col in self.userDataFrame.index.unique():
+                    # Before proceeding we remove the followers 
+                    # Except for about 4-5 users, who can serve as validation
+                    # I include me, people I know and a couple of famous people
+                    excludeUsers = [ ]
                     dataUser = self.userDataFrame.ix[ind]
                     dataCmpr = self.userDataFrame.ix[col]
                     # keep a dict for each person's score in different areas
@@ -183,26 +182,27 @@ class VldtGitRanker(object):
                             scoreDict[k] ) * weightDict[k]
                     # Store the final score in the Rank DF
                 self.userRankSer[col] = currSimilarityScore
-                print 'checking...', ind, col, currSimilarityScore
-        
             
-            # Sort using numpy
-            vals =self.userRankSer.values
-            cols =numpy.array( [ x for x in self.userRankSer.index ] )
-            sortedInds = numpy.argsort( vals )[::-1]
-            rankList = cols[sortedInds]
-            rankList = rankList[0:31] 
-            # Check how many followers we predict
-            Counttop10 = 0
-            Counttop20 = 0
-            Counttop30 = 0
-            for 
-            vldtDict['login'] = ind 
-            vldtDict['percpredtop10'] = 
-            vldtDict['percpredtop20'], 
-            vldtDict['percpredtop30']
-            if ii != rankList[0] :
-                print 'wrong ordering..'
-                break
-            # populate the database
-            self.dbObj.popvldt(valdict)
+                # Sort using numpy
+                vals =self.userRankSer.values
+                cols =numpy.array( [ x for x in self.userRankSer.index ] )
+                sortedInds = numpy.argsort( vals )[::-1]
+                rankList = cols[sortedInds]
+                rankList = rankList[0:31] 
+                # Check how many followers we predict
+                Counttop10 = 0
+                Counttop20 = 0
+                Counttop30 = 0
+                for cc in currUserFlwngList :
+                    if cc in rankList[0:11] :
+                        Counttop10 += 1
+                    if cc in rankList[0:21] :
+                        Counttop20 += 1
+                    if cc in rankList[0:31] :
+                        Counttop30 += 1
+                vldtDict['login'] = ind 
+                vldtDict['numflwng'] = len(currUserFlwngList)
+                vldtDict['percpredtop10'] = Counttop10
+                vldtDict['percpredtop20'] = Counttop20
+                vldtDict['percpredtop30'] = Counttop30
+                self.dbObj.popvldt(valdict)
