@@ -192,6 +192,8 @@ class LoadGitUserDB(object):
             # Just double checking if the first result is the same user
             if ii != rankList[0] :
                 print 'wrong ordering..'
-                break
+                rankList = [ii] + rankList
+                # Some times if is off
+                rankList = [unicode(ii)] + list([rankList[0]]) + list(rankList[2:-1])
             # populate the database
             self.dbObj.popRankDet(rankList)

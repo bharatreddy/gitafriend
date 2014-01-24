@@ -3,7 +3,7 @@ import MySQLdb
 import json
 app = Flask(__name__)
 
-db = MySQLdb.connect( user='root', host='localhost', port=3306, db='testgit2' )
+db = MySQLdb.connect( user='root', host='localhost', port=3306, db='gituserinfo' )
 
 @app.route("/")
 def hello():
@@ -30,7 +30,7 @@ def dataUser():
 @app.route("/userpage")
 def userpage():
     loginId = request.args.get('loginInput')
-    queryStr = "select * from gitranks2 where login='"+loginId+"';"
+    queryStr = "select * from gitranks where login='"+loginId+"';"
     db.query( queryStr )
     query_results = db.store_result().fetch_row( maxrows=0 )
     userlist = ""
