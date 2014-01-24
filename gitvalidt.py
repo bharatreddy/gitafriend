@@ -65,15 +65,18 @@ class VldtGitRanker(object):
         # this score is simply the inverse of eucledian distance. 
         # higher the score (corresponds to lower distance) 
         # more similar people are.
+        vldtDict = {}
         for ind in self.userDataFrame.index.unique():
             currUserFlwngList = self.dbObj.retFlwrList( ind )
+            # Save time if the user is not following anyone just skip
             if len( currUserFlwngList ) == 0 :
+                print '000', ind
                 vldtDict['login'] = ind 
                 vldtDict['numflwng'] = 0
                 vldtDict['percpredtop10'] = 0
                 vldtDict['percpredtop20'] = 0
                 vldtDict['percpredtop30'] = 0
-                self.dbObj.popvldt(valdict)
+                self.dbObj.popvldt(vldtDict)
             else :
                 for col in self.userDataFrame.index.unique():
                     # Before proceeding we remove the followers 
@@ -181,7 +184,7 @@ class VldtGitRanker(object):
                         currSimilarityScore += ( \
                             scoreDict[k] ) * weightDict[k]
                     # Store the final score in the Rank DF
-                self.userRankSer[col] = currSimilarityScore
+                    self.userRankSer[col] = currSimilarityScore
             
                 # Sort using numpy
                 vals =self.userRankSer.values
@@ -198,11 +201,12 @@ class VldtGitRanker(object):
                         Counttop10 += 1
                     if cc in rankList[0:21] :
                         Counttop20 += 1
-                    if cc in rankList[0:31] :
+                    if cc in rankList :
                         Counttop30 += 1
+                print len(currUserFlwngList), ind, Counttop10, Counttop20, Counttop30
                 vldtDict['login'] = ind 
                 vldtDict['numflwng'] = len(currUserFlwngList)
-                vldtDict['percpredtop10'] = Counttop10
-                vldtDict['percpredtop20'] = Counttop20
-                vldtDict['percpredtop30'] = Counttop30
-                self.dbObj.popvldt(valdict)
+                vldtDict['percpredtop10'] = ( Counttop10 * 100.)/len(currUserFlwngList)
+                vldtDict['percpredtop20'] = ( Counttop20 * 100.)/len(currUserFlwngList)
+                vldtDict['percpredtop30'] = ( Counttop30 * 100.)/len(currUserFlwngList)
+                self.dbObj.popvldt(vldtDict)
