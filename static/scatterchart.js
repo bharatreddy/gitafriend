@@ -13,7 +13,7 @@ var callback = function (dataUser) {
 
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 375 - margin.top - margin.bottom;
   // // Commenting out the fish eye part
   // fisheye 
   // var fisheye = d3.fisheye.circular()
