@@ -27,6 +27,17 @@
     <![endif]-->
     <script src="static/d3.v3.min.js" charset="utf-8"></script>
 
+    <style>
+
+      div#pop-up {
+      display: none;
+      position: absolute;
+      width: 150px;
+      padding: 10px;
+    }
+
+    </style>
+
   </head>
 
   <body>
@@ -54,6 +65,8 @@
 
   <div class="container">
     <div class="row">
+
+      <a href="/getFrndDet/{{gitfriends[0]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -72,6 +85,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[1]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -89,7 +105,10 @@
             </p>
           </div>
         </div>
-      </div>  
+      </div> 
+      </a> 
+
+      <a href="/getFrndDet/{{gitfriends[2]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -108,6 +127,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[3]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -126,9 +148,13 @@
           </div>
         </div>
       </div>  
+      </a>
 
     </div>
+
     <div class="row">
+
+      <a href="/getFrndDet/{{gitfriends[4]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -147,6 +173,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[5]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -165,6 +194,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[6]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -183,6 +215,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[7]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -201,8 +236,13 @@
           </div>
         </div>
       </div>  
+      </a>
+
     </div>
+
     <div class="row">
+
+      <a href="/getFrndDet/{{gitfriends[8]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -221,6 +261,9 @@
           </div>
         </div>
       </div>  
+      </a>
+
+      <a href="/getFrndDet/{{gitfriends[9]}}/{{userid}}" target="_blank" dispay="none">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -238,14 +281,20 @@
             </p>
           </div>
         </div>
-      </div>  
+      </div>
+      </a>  
     </div>
   </div>
   
+  <!-- Pop up part -->
+<div class="panel panel-primary" id='pop-up'>
+  <div class="panel-body">
+    Basic panel example
+  </div>
+</div>
+
 
     
-    <script type="text/javascript" src="static/scatterchart.js"></script>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

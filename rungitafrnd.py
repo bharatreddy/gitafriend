@@ -68,6 +68,7 @@ def getFrndDet( frndid=None, userid=None ):
     # For querying purposes we need to put "" around userid
     # since they are not present by default
     userid = '"' + userid + '"'
+    frndid = '"' + frndid + '"'
     # Now we need to query the tables in the database to 
     # to return the common stuff between the user and the friend
     # userdetail table -- for common organizations
