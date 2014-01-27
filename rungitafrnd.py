@@ -30,7 +30,8 @@ def dataUser():
 @app.route("/userpage")
 def userpage():
     loginId = request.args.get('loginInput')
-    queryStr = "select * from gitranks where login='"+loginId+"';"
+    # get the top 10 results
+    queryStr = "select * from gitranks where login='"+loginId+"' limit 10;"
     db.query( queryStr )
     query_results = db.store_result().fetch_row( maxrows=0 )
     userlist = ""
@@ -39,8 +40,25 @@ def userpage():
     for result in query_results[0] :
         if json.dumps(result) == '"'+loginId+'"' :
             continue
-        userlist.append( json.dumps(result) )
-    return render_template( 'users.html', gitfriends=userlist, userid=loginId )
+        # do some filtering to remove the "" marks around user name
+        userlist.append( json.dumps(result)[1:-1] )
+    # We have the list of suggested friends now
+    # get the details of each suggestion
+    nameUserList = []
+    startDateUserList =[]
+    nFlwrUserList =[]
+    # loop through each user and collect the details
+    for uu in userlist :
+        qryStr = "select name, start_date, nflwr from userdetail where login='"+uu+"';"
+        db.query( qryStr )
+        query_results = db.store_result().fetch_row( maxrows=0 )
+        nameUserList.append( query_results[0][0] )
+        # convert the datetime format to an appropriate format
+        startDateUserList.append( query_results[0][1].strftime('%m/%d/%Y') )
+        nFlwrUserList.append( query_results[0][2] )
+
+    return render_template( 'users.html', gitfriends=userlist, userid=loginId,\
+    nameList=nameUserList, startdateList=startDateUserList, nFlwrList=nFlwrUserList )
 
 @app.route("/getFrndDet/<frndid>/<userid>")
 def getFrndDet( frndid=None, userid=None ):
