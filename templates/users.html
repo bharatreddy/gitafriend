@@ -32,7 +32,7 @@
       div#pop-up {
       display: none;
       position: absolute;
-      width: 150px;
+      width: 600px;
       padding: 10px;
     }
 
@@ -289,10 +289,9 @@
   <!-- Pop up part -->
 <div class="panel panel-primary" id='pop-up'>
   <div class="panel-body">
-    Basic panel example
+    {{ cmnFtrsList[0] | safe }}
   </div>
 </div>
-
 
     
     <!-- Bootstrap core JavaScript

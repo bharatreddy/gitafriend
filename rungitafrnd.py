@@ -61,7 +61,7 @@ def userpage():
         detFrndshpUserList.append( frndStr )
 
     return render_template( 'users.html', gitfriends=userlist, userid=loginId,\
-    nameList=nameUserList, startdateList=startDateUserList, nFlwrList=nFlwrUserList )
+    nameList=nameUserList, startdateList=startDateUserList, nFlwrList=nFlwrUserList, cmnFtrsList=detFrndshpUserList )
 
 @app.route("/getFrndDet/<frndid>/<userid>")
 def getFrndDet( frndid=None, userid=None ):
@@ -159,6 +159,7 @@ def getSgstn( frndid=None, userid=None ):
     """ returns a sentence (html formatted) showing why two people
         should be friends. Basically similar to getFrndDet
     """
+    import string
     userid = userid
     frndid = frndid
     # For querying purposes we need to put "" around userid
@@ -278,6 +279,7 @@ def getSgstn( frndid=None, userid=None ):
     '<br>' + 'Common Repos (Starred) : ' + commonRepoStrdList + \
     '<br>' + 'Common people you follow : ' + commonFlngList + \
     '<br>' + 'Common prog languages : ' + commonProgLangList
+    # outDetStr = string.Template( outDetStr )
     return outDetStr
 
 
