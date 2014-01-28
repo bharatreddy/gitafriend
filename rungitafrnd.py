@@ -47,6 +47,7 @@ def userpage():
     nameUserList = []
     startDateUserList =[]
     nFlwrUserList =[]
+    detFrndshpUserList = []
     # loop through each user and collect the details
     for uu in userlist :
         qryStr = "select name, start_date, nflwr from userdetail where login='"+uu+"';"
@@ -56,12 +57,17 @@ def userpage():
         # convert the datetime format to an appropriate format
         startDateUserList.append( query_results[0][1].strftime('%m/%d/%Y') )
         nFlwrUserList.append( query_results[0][2] )
+        frndStr = getSgstn( frndid=uu, userid=loginId )
+        detFrndshpUserList.append( frndStr )
 
     return render_template( 'users.html', gitfriends=userlist, userid=loginId,\
     nameList=nameUserList, startdateList=startDateUserList, nFlwrList=nFlwrUserList )
 
 @app.route("/getFrndDet/<frndid>/<userid>")
 def getFrndDet( frndid=None, userid=None ):
+    """ populates a new page with a table showing why two people
+        should be friends
+    """
     userid = userid
     frndid = frndid
     # For querying purposes we need to put "" around userid
@@ -148,6 +154,131 @@ def getFrndDet( frndid=None, userid=None ):
     return render_template( 'frndy.html', orgl=commonOrgList, \
         cfwl=commonFlwrList, crcl=commonRepoContrList, \
         crsl=commonRepoStrdList, cfnl=commonFlngList, cpll=commonProgLangList )
+
+def getSgstn( frndid=None, userid=None ):
+    """ returns a sentence (html formatted) showing why two people
+        should be friends. Basically similar to getFrndDet
+    """
+    userid = userid
+    frndid = frndid
+    # For querying purposes we need to put "" around userid
+    # since they are not present by default
+    userid = '"' + userid + '"'
+    frndid = '"' + frndid + '"'
+    # Now we need to query the tables in the database to 
+    # to return the common stuff between the user and the friend
+    # userdetail table -- for common organizations
+    # this is a bit different since we stored stuff as a string
+    # so we get individual results and find common orgs
+    queryStrOrgsUser = "select orgnztn from userdetail where login="+userid+";"
+    queryStrOrgsFrnd = "select orgnztn from userdetail where login="+frndid+";"
+    db.query( queryStrOrgsUser )
+    query_results_user = db.store_result().fetch_row( maxrows=0 )
+    userOrgList = []
+    # query_results_user = json.loads( query_results_user )
+    for result in json.loads( query_results_user[0][0] ) :
+        userOrgList.append( result )
+    # get the frnds organizations
+    db.query( queryStrOrgsFrnd )
+    query_results_user = db.store_result().fetch_row( maxrows=0 )
+    frndOrgList = []
+    for result in json.loads( query_results_user[0][0] ) :
+        frndOrgList.append(result)
+    # Now get the common Orgs (if any)
+    commonOrgList = ''
+    countLen = 0
+    for uo in userOrgList :
+        if uo in frndOrgList :
+            if countLen != len(query_results_user)-1 :
+                commonOrgList = commonOrgList + str(uo) + ', '
+            else :
+                commonOrgList = commonOrgList + str(uo)
+            countLen += 1
+    if len( commonOrgList ) == 0:
+        commonOrgList = 'None'
+    # Now get the follower list
+    qryStr = 'select user1.flwrlogin from follower user1 join follower user2 on user2.login='\
+     + frndid + ' and user1.flwrlogin = user2.flwrlogin where user1.login= '+userid;
+    db.query( qryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    commonFlwrList = ''
+    countLen = 0
+    for result in query_results :
+        if countLen != len(query_results)-1 :
+            commonFlwrList = commonFlwrList + result[0] + ', ' 
+        else :
+            commonFlwrList = commonFlwrList + result[0]
+        countLen += 1
+    if len( commonFlwrList ) == 0:
+        commonFlwrList = 'None'
+    # Now get the list of people both follow
+    qryStr = 'select user1.flnglogin from following user1 join following user2 on user2.login='\
+     + frndid + ' and user1.flnglogin = user2.flnglogin where user1.login= '+userid;
+    db.query( qryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    commonFlngList = ''
+    countLen = 0
+    for result in query_results :
+        if countLen != len(query_results)-1 :
+            commonFlngList = commonFlngList + result[0] + ', ' 
+        else :
+            commonFlngList = commonFlngList + result[0]
+        countLen += 1
+    if len( commonFlngList ) == 0:
+        commonFlngList = 'None'
+    # Now get the common proglangs list
+    qryStr = 'select user1.langused from proglang user1 join proglang user2 on user2.login='\
+     + frndid + ' and user1.langused = user2.langused where user1.login= '+userid;
+    db.query( qryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    commonProgLangList = ''
+    countLen = 0
+    for result in query_results :
+        if countLen != len(query_results)-1 :
+            commonProgLangList = commonProgLangList + result[0] + ', ' 
+        else :
+            commonProgLangList = commonProgLangList + result[0]
+        countLen += 1
+    if len( commonProgLangList ) == 0:
+        commonProgLangList = 'None'
+    # Now get the common repos contr to list
+    qryStr = 'select user1.repocntrbtd from repocontr user1 join repocontr user2 on user2.login='\
+     + frndid + ' and user1.repocntrbtd = user2.repocntrbtd where user1.login= '+userid;
+    db.query( qryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    commonRepoContrList = ''
+    countLen = 0
+    for result in query_results :
+        if countLen != len(query_results)-1 :
+            commonRepoContrList = commonRepoContrList + result[0] + ', ' 
+        else :
+            commonRepoContrList = commonRepoContrList + result[0]
+        countLen += 1
+    if len( commonRepoContrList ) == 0:
+        commonRepoContrList = 'None'
+    # Now get the common repos starred to list
+    qryStr = 'select user1.repostrd from repostarred user1 join repostarred user2 on user2.login='\
+     + frndid + ' and user1.repostrd = user2.repostrd where user1.login= '+userid;
+    db.query( qryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    commonRepoStrdList = ''
+    countLen = 0
+    for result in query_results :
+        if countLen != len(query_results)-1 :
+            commonRepoStrdList = commonRepoStrdList + result[0] + ', ' 
+        else :
+            commonRepoStrdList = commonRepoStrdList + result[0]
+        countLen += 1
+    if len( commonRepoStrdList ) == 0:
+        commonRepoStrdList = 'None'
+    # Put all these values in a string, formatted for html
+    outDetStr = 'Common organizations : ' + commonOrgList + \
+    '<br>' + 'Common Followers : ' + commonFlwrList + \
+    '<br>' + 'Common Repos (Contributed to) : ' + commonRepoContrList + \
+    '<br>' + 'Common Repos (Starred) : ' + commonRepoStrdList + \
+    '<br>' + 'Common people you follow : ' + commonFlngList + \
+    '<br>' + 'Common prog languages : ' + commonProgLangList
+    return outDetStr
 
 
 @app.route("/<pagename>")
