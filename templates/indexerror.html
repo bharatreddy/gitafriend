@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+
+    <title>Git-A-Friend</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/bootstrap/css/starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="static/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Comment out the fisheye part for now, may be for future -->
+    <!-- <script src="static/fisheye.js"></script> -->
+    
+    <style>
+
+      .chart {
+
+      }
+
+      .main text {
+          font: 10px sans-serif;  
+      }
+
+      .axis line, .axis path {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+      }
+
+      .dot {
+        stroke: #000;
+        fill: steelblue;
+      }
+
+
+      .tooltip {
+        position: absolute;
+        width: 200px;
+        height: 28px;
+        pointer-events: none;
+      }
+
+  </style>
+
+
+  </head>
+
+  <body>
+  <form id='myform' method='get' action='userpage'>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Git A Friend</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="https://slid.es/bharatkunduri/git-a-friend">Slides</a></li>
+            <li><a href="mailto:bharatr@vt.edu">Contact</a></li>
+            <li><a href="https://github.com/bharatreddy/gitafriend">Project on Github</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Git A Friend</h1>
+        <p class="lead" id='printUsers'>Find friends on github</p>
+      </div>
+
+      <div>
+        <input class="form-control" name="loginInput" id="loginInput" value="" placeholder="Enter your github login">
+        <p class="lead" style="margin-left:150px;">
+        <font color=crimson>The username you searched for is not in the database. Please try another name.</font>
+        </p>
+      </div>  
+
+      <div id='d3Plot' style="margin-left:50px;margin-top:15px;height:55px;">
+        <!-- /the chart goes here -->
+      </div>
+
+    </div><!-- /.container -->
+
+    <script type="text/javascript" src="static/scatterchart.js"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/jquery-1.10.2.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    </form>
+  </body>
+</html>
