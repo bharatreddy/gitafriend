@@ -25,11 +25,12 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <script src="static/d3.v3.min.js" charset="utf-8"></script>
+    <script src="static/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="static/popdiv.js"></script>
 
     <style>
 
-      div#pop-up {
+      div.pop-up {
       display: none;
       position: absolute;
       width: 600px;
@@ -66,7 +67,7 @@
   <div class="container">
     <div class="row">
 
-      <a href="/getFrndDet/{{gitfriends[0]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[0]}}/{{userid}}" target="_blank" dispay="none" id="trigger1">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -87,7 +88,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[1]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[1]}}/{{userid}}" target="_blank" dispay="none" id="trigger2">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -108,7 +109,7 @@
       </div> 
       </a> 
 
-      <a href="/getFrndDet/{{gitfriends[2]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[2]}}/{{userid}}" target="_blank" dispay="none" id="trigger3">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -129,7 +130,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[3]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[3]}}/{{userid}}" target="_blank" dispay="none" id="trigger4">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -154,7 +155,7 @@
 
     <div class="row">
 
-      <a href="/getFrndDet/{{gitfriends[4]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[4]}}/{{userid}}" target="_blank" dispay="none" id="trigger5">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -175,7 +176,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[5]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[5]}}/{{userid}}" target="_blank" dispay="none" id="trigger6">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -196,7 +197,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[6]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[6]}}/{{userid}}" target="_blank" dispay="none" id="trigger7">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -217,7 +218,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[7]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[7]}}/{{userid}}" target="_blank" dispay="none" id="trigger8">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -242,7 +243,7 @@
 
     <div class="row">
 
-      <a href="/getFrndDet/{{gitfriends[8]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[8]}}/{{userid}}" target="_blank" dispay="none" id="trigger9">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -263,7 +264,7 @@
       </div>  
       </a>
 
-      <a href="/getFrndDet/{{gitfriends[9]}}/{{userid}}" target="_blank" dispay="none">
+      <a href="/getFrndDet/{{gitfriends[9]}}/{{userid}}" target="_blank" dispay="none" id="trigger10">
       <div class="col-xs-3">
         <div class="offer offer-radius offer-danger">
           <div class="shape">
@@ -286,14 +287,66 @@
     </div>
   </div>
   
-  <!-- Pop up part -->
-<div class="panel panel-primary" id='pop-up'>
+  <!-- Hidden Pop up divs -->
+<div class="panel panel-primary pop-up" id='pop-up1'>
   <div class="panel-body">
     {{ cmnFtrsList[0] | safe }}
   </div>
 </div>
 
+<div class="panel panel-primary pop-up" id='pop-up2'>
+  <div class="panel-body">
+    {{ cmnFtrsList[1] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up3'>
+  <div class="panel-body">
+    {{ cmnFtrsList[2] | safe }}
+  </div>
+</div>
     
+<div class="panel panel-primary pop-up" id='pop-up4'>
+  <div class="panel-body">
+    {{ cmnFtrsList[3] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up5'>
+  <div class="panel-body">
+    {{ cmnFtrsList[4] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up6'>
+  <div class="panel-body">
+    {{ cmnFtrsList[5] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up7'>
+  <div class="panel-body">
+    {{ cmnFtrsList[6] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up8'>
+  <div class="panel-body">
+    {{ cmnFtrsList[7] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up9'>
+  <div class="panel-body">
+    {{ cmnFtrsList[8] | safe }}
+  </div>
+</div>
+
+<div class="panel panel-primary pop-up" id='pop-up10'>
+  <div class="panel-body">
+    {{ cmnFtrsList[9] | safe }}
+  </div>
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
