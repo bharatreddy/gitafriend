@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import MySQLdb
 import json
 app = Flask(__name__)
@@ -285,6 +285,14 @@ def getSgstn( frndid=None, userid=None ):
     # outDetStr = string.Template( outDetStr )
     return outDetStr
 
+@app.route('/searchUserLogin')
+def searchUserLogin():
+    search = request.args.get('search')
+    queryStr = "select login from userdetail where login like '"+search+"%' limit 10;"
+    db.query( queryStr )
+    query_results = db.store_result().fetch_row( maxrows=0 )
+    resOut = [ res[0] for res in query_results ]
+    return json.dumps( resOut )
 
 @app.route("/<pagename>")
 def regularpage( pagename=None ):

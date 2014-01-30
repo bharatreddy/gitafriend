@@ -15,7 +15,9 @@
 
     <!-- Custom styles for this template -->
     <link href="static/bootstrap/css/starter-template.css" rel="stylesheet">
-
+    <script src="static/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="static/jquery-ui.css">
+    <script src="static/jquery-ui.js"></script>
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -27,8 +29,27 @@
     <script src="static/d3.v3.min.js" charset="utf-8"></script>
     <!-- Comment out the fisheye part for now, may be for future -->
     <!-- <script src="static/fisheye.js"></script> -->
+
+    <script type="text/javascript">
+      $(function() {
+        $( "#loginInput" ).autocomplete({
+          
+          source: function( request, response ) {
+              $.getJSON("/searchUserLogin", {
+                  search: $('input[name="loginInput"]').val()
+              }, response);
+          }
+        
+        });
+
+      });
+    </script>
     
     <style>
+
+      .tt-hint {
+        display: none
+        }
 
       .chart {
 
@@ -93,7 +114,7 @@
         <p class="lead" id='printUsers'>Find friends on github</p>
       </div>
 
-      <div>
+      <div class="ui-widget">
         <input class="form-control" name="loginInput" id="loginInput" value="" placeholder="Enter your github login">
       </div>  
 
@@ -108,7 +129,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/jquery-1.10.2.min.js"></script>
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
     </form>
   </body>
