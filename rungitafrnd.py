@@ -56,7 +56,7 @@ def userpage():
             qryStr = "select name, start_date, nflwr from userdetail where login='"+uu+"';"
             db.query( qryStr )
             query_results = db.store_result().fetch_row( maxrows=0 )
-            nameUserList.append( query_results[0][0].decode('utf-8') )
+            nameUserList.append( query_results[0][0].decode('ISO-8859-1') )
             # convert the datetime format to an appropriate format
             startDateUserList.append( query_results[0][1].strftime('%m/%d/%Y') )
             nFlwrUserList.append( query_results[0][2] )
