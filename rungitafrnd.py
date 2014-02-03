@@ -194,9 +194,9 @@ def getSgstn( frndid=None, userid=None ):
     for uo in userOrgList :
         if uo in frndOrgList :
             if countLen != len(query_results_user)-1 :
-                commonOrgList = commonOrgList + str(uo) + ', '
+                commonOrgList = commonOrgList + '<b>' + str(uo) + '</b>' + ', '
             else :
-                commonOrgList = commonOrgList + str(uo)
+                commonOrgList = commonOrgList + '<b>' + str(uo) + '</b>'
             countLen += 1
     if len( commonOrgList ) == 0:
         commonOrgList = 'None'
@@ -209,9 +209,9 @@ def getSgstn( frndid=None, userid=None ):
     countLen = 0
     for result in query_results :
         if countLen != len(query_results)-1 :
-            commonFlwrList = commonFlwrList + result[0] + ', ' 
+            commonFlwrList = commonFlwrList + '<b>' + result[0] + '</b>' + ', ' 
         else :
-            commonFlwrList = commonFlwrList + result[0]
+            commonFlwrList = commonFlwrList + '<b>' + result[0] + '</b>'
         countLen += 1
     if len( commonFlwrList ) == 0:
         commonFlwrList = 'None'
@@ -224,9 +224,9 @@ def getSgstn( frndid=None, userid=None ):
     countLen = 0
     for result in query_results :
         if countLen != len(query_results)-1 :
-            commonFlngList = commonFlngList + result[0] + ', ' 
+            commonFlngList = commonFlngList + '<b>' + result[0] + '</b>' + ', ' 
         else :
-            commonFlngList = commonFlngList + result[0]
+            commonFlngList = commonFlngList + '<b>' + result[0] + '</b>'
         countLen += 1
     if len( commonFlngList ) == 0:
         commonFlngList = 'None'
@@ -239,9 +239,9 @@ def getSgstn( frndid=None, userid=None ):
     countLen = 0
     for result in query_results :
         if countLen != len(query_results)-1 :
-            commonProgLangList = commonProgLangList + result[0] + ', ' 
+            commonProgLangList = commonProgLangList + '<b>' + result[0] + '</b>' + ', ' 
         else :
-            commonProgLangList = commonProgLangList + result[0]
+            commonProgLangList = commonProgLangList + '<b>' + result[0] + '</b>'
         countLen += 1
     if len( commonProgLangList ) == 0:
         commonProgLangList = 'None'
@@ -254,9 +254,9 @@ def getSgstn( frndid=None, userid=None ):
     countLen = 0
     for result in query_results :
         if countLen != len(query_results)-1 :
-            commonRepoContrList = commonRepoContrList + result[0] + ', ' 
+            commonRepoContrList = commonRepoContrList + '<b>' + result[0] + '</b>' + ', ' 
         else :
-            commonRepoContrList = commonRepoContrList + result[0]
+            commonRepoContrList = commonRepoContrList + '<b>' + result[0] + '</b>'
         countLen += 1
     if len( commonRepoContrList ) == 0:
         commonRepoContrList = 'None'
@@ -269,9 +269,9 @@ def getSgstn( frndid=None, userid=None ):
     countLen = 0
     for result in query_results :
         if countLen != len(query_results)-1 :
-            commonRepoStrdList = commonRepoStrdList + result[0] + ', ' 
+            commonRepoStrdList = commonRepoStrdList + '<b>' + result[0] + '</b>' + ', ' 
         else :
-            commonRepoStrdList = commonRepoStrdList + result[0]
+            commonRepoStrdList = commonRepoStrdList + '<b>' + result[0] + '</b>'
         countLen += 1
     if len( commonRepoStrdList ) == 0:
         commonRepoStrdList = 'None'
